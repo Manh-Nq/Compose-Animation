@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,6 +31,7 @@ class UpdateTransitionActivity : ComponentActivity() {
         UP, DOWN
     }
 
+    @ExperimentalTransitionApi
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +41,7 @@ class UpdateTransitionActivity : ComponentActivity() {
         }
     }
 
+    @ExperimentalTransitionApi
     @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     @Composable
@@ -53,6 +53,8 @@ class UpdateTransitionActivity : ComponentActivity() {
         }
     }
 
+    @ExperimentalTransitionApi
+    @ExperimentalAnimationApi
     @Composable
     fun TestUpdateTransition() {
         var currentState by remember {
@@ -101,10 +103,14 @@ class UpdateTransitionActivity : ComponentActivity() {
                     contentDescription = "",
                     tint = colorIcon, modifier = Modifier.size(sizeAnim/2)
                 )
+                UpView(transition.createChildTransition {
+                    it == AppState.UP
+                })
             }
         }
     }
 
+    @ExperimentalTransitionApi
     @ExperimentalMaterialApi
     @ExperimentalAnimationApi
     @Composable
@@ -186,9 +192,23 @@ class UpdateTransitionActivity : ComponentActivity() {
         return remember(transition) { TransitionData(color, size) }
     }
 
+    @ExperimentalAnimationApi
+    @Composable
+    fun UpView(isUp: Transition<Boolean>) {
+        AnimatedVisibility(visible = isUp.currentState) {
+            Button(
+                onClick = { },
+                modifier = Modifier.size(100.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+            ) {
+
+            }
+        }
+    }
+
     @Preview
     @Composable
     fun show() {
-        TestUpdateTransition()
+
     }
 }
