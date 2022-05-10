@@ -27,14 +27,14 @@ fun AnimationCustom() {
     val transition = updateTransition(currentState, label = "")
 
 
-    val alpha by transition.animateFloat { state ->
+    val alpha by transition.animateFloat(label = "") { state ->
         when (state) {
             BoxState.Collapsed -> 1f
             BoxState.Expanded -> 0.5f
         }
     }
 
-    val sizeNew by transition.animateInt { size ->
+    val sizeNew by transition.animateInt(label = "") { size ->
         when (size) {
             BoxState.Collapsed -> 250
             BoxState.Expanded -> 150

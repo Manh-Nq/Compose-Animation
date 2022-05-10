@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.exponentialDecay
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -51,7 +52,7 @@ class AnimatableActivity : ComponentActivity() {
             }
 
             LaunchedEffect(rs) {
-                color.animateTo(if (rs) Color.Blue else Color.Yellow)
+                color.animateTo(if (rs) Color.Blue else Color.Yellow, animationSpec = tween(350))
                 if (rs) {
                     scaleAnim.animateDecay(
                         1f,
